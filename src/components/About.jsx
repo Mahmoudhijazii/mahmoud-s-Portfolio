@@ -2,7 +2,7 @@ import SectionWrapper from "./SectionWrapper";
 import SectionHeading from "./SectionHeading";
 import Reveal from "./Reveal";
 import { Code2, Layers, Rocket, GraduationCap } from "lucide-react";
-import profileImg from "../assets/mahmoud.jpg";
+import profileImg from "../assets/image.jpg";
 
 const stats = [
   { icon: Code2, value: "20+", label: "Projects Built", desc: "End-to-end, solo" },

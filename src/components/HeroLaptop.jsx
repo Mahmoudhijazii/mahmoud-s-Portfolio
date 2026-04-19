@@ -24,12 +24,15 @@ export default function HeroLaptop({ className = "" }) {
     camera.position.z = 7;
 
     const isDark = theme === "dark";
-    const lineColor = isDark ? 0x4f7df9 : 0x4f7df9;
-    const lineOpacity = isDark ? 0.5 : 0.35;
-    const fillColor = isDark ? 0x4f7df9 : 0x4f7df9;
-    const fillOpacity = isDark ? 0.03 : 0.02;
 
-    // Wireframe icosahedron
+    // Color config per theme
+    const lineColor = isDark ? 0x5b7dfa : 0x3d5cf5;
+    const lineOpacity = isDark ? 0.55 : 0.7;
+    const fillColor = isDark ? 0x5b7dfa : 0x3d5cf5;
+    const fillOpacity = isDark ? 0.04 : 0.05;
+    const glowColor = isDark ? 0x5b7dfa : 0x7b4ff5;
+
+    // === MAIN WIREFRAME ===
     const geo = new THREE.IcosahedronGeometry(2.4, 1);
     const edges = new THREE.EdgesGeometry(geo);
     const lineMat = new THREE.LineBasicMaterial({
@@ -39,30 +42,54 @@ export default function HeroLaptop({ className = "" }) {
     });
     const wireframe = new THREE.LineSegments(edges, lineMat);
 
-    // Subtle solid fill for depth
+    // Subtle solid fill
     const solidMat = new THREE.MeshBasicMaterial({
       color: fillColor,
       transparent: true,
       opacity: fillOpacity,
-      wireframe: false,
       side: THREE.DoubleSide,
     });
     const solid = new THREE.Mesh(geo, solidMat);
 
+    // === OUTER GLOW (larger, subtle) ===
+    const glowGeo = new THREE.IcosahedronGeometry(2.8, 0);
+    const glowEdges = new THREE.EdgesGeometry(glowGeo);
+    const glowMat = new THREE.LineBasicMaterial({
+      color: glowColor,
+      transparent: true,
+      opacity: isDark ? 0.15 : 0.22,
+    });
+    const outerGlow = new THREE.LineSegments(glowEdges, glowMat);
+
+    // === INNER CORE (smaller, tighter) ===
+    const coreGeo = new THREE.IcosahedronGeometry(1.4, 0);
+    const coreEdges = new THREE.EdgesGeometry(coreGeo);
+    const coreMat = new THREE.LineBasicMaterial({
+      color: isDark ? 0x8b63f5 : 0x7b4ff5,
+      transparent: true,
+      opacity: isDark ? 0.35 : 0.4,
+    });
+    const innerCore = new THREE.LineSegments(coreEdges, coreMat);
+
     const group = new THREE.Group();
+    group.add(outerGlow);
     group.add(wireframe);
     group.add(solid);
+    group.add(innerCore);
     scene.add(group);
 
     // Mouse tracking
-    const mouse = { x: 0 };
-    const targetRotY = { v: 0 };
-    const currentRotY = { v: 0 };
+    const mouse = { x: 0, y: 0 };
+    const targetRot = { x: 0, y: 0 };
+    const currentRot = { x: 0, y: 0 };
 
     const handleMouseMove = (e) => {
       const cx = e.touches ? e.touches[0].clientX : e.clientX;
+      const cy = e.touches ? e.touches[0].clientY : e.clientY;
       mouse.x = (cx / window.innerWidth) * 2 - 1;
-      targetRotY.v = mouse.x * 0.3;
+      mouse.y = -(cy / window.innerHeight) * 2 + 1;
+      targetRot.y = mouse.x * 0.3;
+      targetRot.x = mouse.y * 0.2;
     };
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("touchmove", handleMouseMove, { passive: true });
@@ -84,9 +111,23 @@ export default function HeroLaptop({ className = "" }) {
       animId = requestAnimationFrame(animate);
       time += 0.008;
 
-      group.rotation.x = 0.3 + Math.sin(time * 0.5) * 0.1;
-      currentRotY.v += (targetRotY.v - currentRotY.v) * 0.02;
-      group.rotation.y = time * 0.3 + currentRotY.v;
+      // Main wireframe rotates
+      currentRot.x += (targetRot.x - currentRot.x) * 0.02;
+      currentRot.y += (targetRot.y - currentRot.y) * 0.02;
+      wireframe.rotation.x = time * 0.2 + currentRot.x;
+      wireframe.rotation.y = time * 0.3 + currentRot.y;
+      solid.rotation.x = wireframe.rotation.x;
+      solid.rotation.y = wireframe.rotation.y;
+
+      // Outer glow rotates opposite, slower
+      outerGlow.rotation.x = -time * 0.1;
+      outerGlow.rotation.y = -time * 0.15;
+
+      // Inner core rotates faster, different axis
+      innerCore.rotation.x = time * 0.4;
+      innerCore.rotation.z = time * 0.3;
+
+      // Whole group floats
       group.position.y = Math.sin(time * 0.7) * 0.08;
 
       renderer.render(scene, camera);
@@ -110,17 +151,19 @@ export default function HeroLaptop({ className = "" }) {
       window.removeEventListener("touchmove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("visibilitychange", handleVisibility);
-      geo.dispose();
-      edges.dispose();
-      lineMat.dispose();
-      solidMat.dispose();
+      [geo, edges, glowGeo, glowEdges, coreGeo, coreEdges].forEach((g) => g.dispose());
+      [lineMat, solidMat, glowMat, coreMat].forEach((m) => m.dispose());
       renderer.dispose();
     };
   }, [theme]);
 
   return (
-    <div className={className}>
-      <canvas ref={canvasRef} className="w-full h-full" style={{ display: "block" }} />
+    <div className={`relative ${className}`}>
+      {/* Aura gradient backdrop for light mode */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="w-[70%] h-[70%] rounded-full bg-gradient-to-br from-accent/10 via-accent-secondary/8 to-transparent blur-3xl" />
+      </div>
+      <canvas ref={canvasRef} className="relative w-full h-full" style={{ display: "block" }} />
     </div>
   );
 }

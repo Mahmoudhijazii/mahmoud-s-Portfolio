@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowDown, Download, Mail } from "lucide-react";
+import { ArrowDown, Download, Mail, Sparkles } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import HeroLaptop from "./HeroLaptop";
 
@@ -23,6 +23,9 @@ export default function Hero() {
       id="hero"
       className="relative min-h-[100dvh] flex items-center overflow-hidden"
     >
+      {/* Subtle dotted grid backdrop */}
+      <div className="absolute inset-0 dots-bg pointer-events-none" />
+
       <div className="relative max-w-[1100px] mx-auto w-full px-6 md:px-12 lg:px-24 grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-4 items-center pt-24 lg:pt-0">
         {/* Left: Text content */}
         <motion.div
@@ -33,7 +36,7 @@ export default function Hero() {
         >
           {/* Status badge */}
           <motion.div variants={item} className="mb-7">
-            <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-border/60 bg-bg-card/50 backdrop-blur-sm text-[13px] text-text-secondary font-mono tracking-wide">
+            <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-border glass-card text-[13px] text-text-secondary font-mono tracking-wide shadow-sm">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
@@ -70,7 +73,7 @@ export default function Hero() {
           >
             <a
               href="#projects"
-              className="group whitespace-nowrap px-6 py-3 bg-accent hover:bg-accent-hover text-white rounded-xl font-medium transition-all duration-300 inline-flex items-center gap-2 hover:shadow-md text-[14px]"
+              className="btn-accent group whitespace-nowrap px-6 py-3 bg-accent hover:bg-accent-hover text-white rounded-xl font-semibold inline-flex items-center gap-2 text-[14px]"
             >
               View My Work
               <ArrowDown
@@ -81,14 +84,14 @@ export default function Hero() {
             <a
               href="/resume.pdf"
               download
-              className="group whitespace-nowrap px-6 py-3 border border-accent/40 hover:border-accent text-accent hover:bg-accent-muted rounded-xl font-medium transition-all duration-300 inline-flex items-center gap-2 text-[14px]"
+              className="group whitespace-nowrap px-6 py-3 border border-accent/50 hover:border-accent text-accent hover:bg-accent-muted rounded-xl font-semibold transition-all duration-300 inline-flex items-center gap-2 text-[14px] shadow-sm"
             >
               <Download size={14} />
               Resume
             </a>
             <a
               href="#contact"
-              className="whitespace-nowrap px-6 py-3 border border-border/60 hover:border-border-hover text-text-primary rounded-xl font-medium transition-all duration-300 hover:bg-bg-card/60 text-[14px] inline-flex items-center"
+              className="whitespace-nowrap px-6 py-3 border border-border hover:border-border-hover text-text-primary rounded-xl font-semibold transition-all duration-300 hover:bg-bg-card text-[14px] inline-flex items-center shadow-sm"
             >
               Get in Touch
             </a>
@@ -109,7 +112,7 @@ export default function Hero() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group p-3 rounded-xl border border-border/40 hover:border-accent/30 bg-bg-card/30 hover:bg-accent-muted text-text-tertiary hover:text-accent transition-all duration-300"
+                className="group p-3 rounded-xl border border-border hover:border-accent bg-bg-card hover:bg-accent-muted text-text-secondary hover:text-accent transition-all duration-300 shadow-sm hover:shadow-md"
                 aria-label={label}
               >
                 <Icon size={18} />
@@ -118,7 +121,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Right: 3D Laptop */}
+        {/* Right: 3D Shape */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -139,9 +142,9 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-[22px] h-[34px] rounded-full border border-border/50 flex items-start justify-center pt-2"
+          className="w-[22px] h-[34px] rounded-full border border-border flex items-start justify-center pt-2"
         >
-          <div className="w-[3px] h-[6px] bg-text-tertiary/60 rounded-full" />
+          <div className="w-[3px] h-[6px] bg-text-tertiary rounded-full" />
         </motion.div>
       </motion.div>
     </section>

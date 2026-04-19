@@ -63,14 +63,14 @@ export default function ParticleBackground() {
     particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     particleGeo.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
 
-    const particleAlpha = isDark ? 0.4 : 0.12;
+    const particleAlpha = isDark ? 0.4 : 0.28;
     const particleMat = new THREE.ShaderMaterial({
       transparent: true,
       depthWrite: false,
       blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
       uniforms: {
-        uColor1: { value: new THREE.Color(isDark ? 0x4f7df9 : 0x3a5ec9) },
-        uColor2: { value: new THREE.Color(isDark ? 0x7b63f5 : 0x5a4abf) },
+        uColor1: { value: new THREE.Color(isDark ? 0x5b7dfa : 0x2e4cc9) },
+        uColor2: { value: new THREE.Color(isDark ? 0x8b63f5 : 0x5a3fc9) },
         uAlpha: { value: particleAlpha },
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
       },
@@ -135,7 +135,7 @@ export default function ParticleBackground() {
     const lineMat = new THREE.LineBasicMaterial({
       vertexColors: true,
       transparent: true,
-      opacity: isDark ? 0.12 : 0.04,
+      opacity: isDark ? 0.14 : 0.10,
       blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
       depthWrite: false,
     });
@@ -170,7 +170,7 @@ export default function ParticleBackground() {
 
     let animId;
     let frame = 0;
-    const lineBaseColor = new THREE.Color(isDark ? 0x4f7df9 : 0x3a5ec9);
+    const lineBaseColor = new THREE.Color(isDark ? 0x5b7dfa : 0x2e4cc9);
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
