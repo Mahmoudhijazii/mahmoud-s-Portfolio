@@ -24,7 +24,7 @@ export default function About() {
               {/* Glow ring behind photo */}
               <div className="absolute -inset-1 bg-gradient-to-br from-accent/30 via-accent-secondary/20 to-transparent rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               {/* Photo container */}
-              <div className="relative w-48 h-56 sm:w-56 sm:h-64 lg:w-full lg:h-auto lg:aspect-[3/4] rounded-2xl overflow-hidden border-2 border-border/40 group-hover:border-accent/30 transition-colors duration-500">
+              <div className="relative w-48 h-56 sm:w-56 sm:h-64 lg:w-full lg:h-auto lg:aspect-[3/4] rounded-2xl overflow-hidden border-2 border-border group-hover:border-accent/40 transition-colors duration-500 shadow-lg">
                 <img
                   src={profileImg}
                   alt="Mahmoud Hijazi"
@@ -72,7 +72,7 @@ export default function About() {
         <div className="lg:col-span-4 grid grid-cols-2 gap-3 content-start">
           {stats.map(({ icon: Icon, value, label, desc }, i) => (
             <Reveal key={label} delay={100 + i * 60}>
-              <div className="card-glow p-5 rounded-2xl border border-border/60 bg-bg-card/60 hover:bg-bg-card-hover hover:border-border-hover transition-all duration-400 group h-full">
+              <div className="card-glow p-5 rounded-2xl border border-border bg-bg-card hover:border-accent/30 transition-all duration-400 group h-full">
                 <div className="w-9 h-9 rounded-lg bg-accent-muted flex items-center justify-center mb-3 group-hover:bg-accent-glow transition-colors duration-300">
                   <Icon size={16} className="text-accent" strokeWidth={2} />
                 </div>

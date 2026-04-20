@@ -57,7 +57,7 @@ export default function Contact() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="card-glow group flex items-center justify-between p-4 rounded-xl border border-border/40 bg-bg-card/40 hover:bg-bg-card-hover hover:border-border-hover transition-all duration-300"
+                className="card-glow group flex items-center justify-between p-4 rounded-xl border border-border bg-bg-card hover:border-accent/30 transition-all duration-300"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center group-hover:bg-accent-glow group-hover:scale-105 transition-all duration-300">

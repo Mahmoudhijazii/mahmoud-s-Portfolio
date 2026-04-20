@@ -62,7 +62,7 @@ export default function Navbar() {
             {/* Theme toggle */}
             <button
               onClick={toggleTheme}
-              className="ml-2 p-2.5 rounded-xl border border-border/50 hover:border-border-hover bg-bg-card/50 hover:bg-bg-card text-text-secondary hover:text-text-primary transition-all duration-300"
+              className="ml-2 p-2.5 rounded-xl border border-border hover:border-accent/40 bg-bg-card hover:bg-accent-muted text-text-secondary hover:text-accent transition-all duration-300 shadow-sm"
               aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
@@ -70,7 +70,7 @@ export default function Navbar() {
 
             <a
               href="#contact"
-              className="ml-3 text-[15px] px-6 py-2.5 bg-accent hover:bg-accent-hover text-white rounded-xl font-semibold transition-all duration-300"
+              className="btn-accent ml-3 text-[14px] px-6 py-2.5 bg-accent hover:bg-accent-hover text-white rounded-xl font-semibold"
             >
               Let's Talk
             </a>
@@ -79,7 +79,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2 md:hidden">
             <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl border border-border/50 text-text-secondary hover:text-text-primary transition-all duration-300"
+              className="p-2.5 rounded-xl border border-border bg-bg-card text-text-secondary hover:text-accent transition-all duration-300 shadow-sm"
               aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}

@@ -18,7 +18,7 @@ function ExperienceCard({ experience, index, isLast }) {
         </div>
 
         {/* Card */}
-        <div className="card-glow p-6 md:p-8 rounded-2xl border border-border/60 bg-bg-card/50 hover:bg-bg-card-hover hover:border-border-hover transition-all duration-400">
+        <div className="card-glow p-6 md:p-8 rounded-2xl border border-border bg-bg-card hover:border-accent/30 transition-all duration-400">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
             <div>
               <h3 className="text-lg md:text-xl font-bold text-text-primary tracking-tight">
@@ -26,7 +26,7 @@ function ExperienceCard({ experience, index, isLast }) {
               </h3>
               <p className="text-accent font-medium text-[15px]">{experience.company}</p>
             </div>
-            <span className="text-[12px] text-text-tertiary font-mono tracking-wider bg-bg-tertiary/50 px-3 py-1 rounded-full shrink-0 self-start">
+            <span className="text-[12px] text-text-secondary font-mono tracking-wider bg-bg-tertiary px-3 py-1 rounded-full shrink-0 self-start border border-border">
               {experience.period}
             </span>
           </div>
@@ -48,7 +48,7 @@ function ExperienceCard({ experience, index, isLast }) {
             {experience.technologies.map((tech) => (
               <span
                 key={tech}
-                className="text-[11px] px-2.5 py-1 rounded-md border border-border/50 text-text-tertiary font-mono bg-bg-tertiary/30"
+                className="text-[11px] px-2.5 py-1 rounded-md border border-border text-text-secondary font-mono bg-bg-tertiary"
               >
                 {tech}
               </span>

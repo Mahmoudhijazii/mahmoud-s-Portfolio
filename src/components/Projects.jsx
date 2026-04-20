@@ -25,30 +25,48 @@ const iconMap = {
 function ProjectThumbnail({ image, title, className = "" }) {
   const Icon = iconMap[image?.icon] || LayoutDashboard;
 
+  // If an actual image is provided, render it
+  if (image?.src) {
+    return (
+      <div
+        className={`relative aspect-[16/10] rounded-xl overflow-hidden border border-border bg-bg-tertiary shadow-md ${className}`}
+      >
+        <img
+          src={image.src}
+          alt={title}
+          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
+        />
+      </div>
+    );
+  }
+
+  // Fallback to gradient + icon placeholder
   return (
     <div
       className={`relative aspect-[16/10] rounded-xl overflow-hidden bg-gradient-to-br ${
-        image?.gradient || "from-accent/20 to-accent-secondary/20"
-      } border border-white/[0.04] ${className}`}
+        image?.gradient || "from-accent to-accent-secondary"
+      } border border-white/10 shadow-md ${className}`}
     >
-      {/* Subtle grid pattern inside thumbnail */}
+      {/* Subtle grid pattern */}
       <div
-        className="absolute inset-0 opacity-[0.06]"
+        className="absolute inset-0 opacity-[0.12]"
         style={{
           backgroundImage:
-            "radial-gradient(circle, currentColor 1px, transparent 1px)",
-          backgroundSize: "20px 20px",
+            "radial-gradient(circle, white 1px, transparent 1px)",
+          backgroundSize: "22px 22px",
         }}
       />
+      {/* Glowing orbs for depth */}
+      <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-white/15 blur-2xl" />
+      <div className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full bg-white/10 blur-2xl" />
+
       <div className="absolute inset-0 flex items-center justify-center">
         <Icon
-          size={40}
-          className="text-white/20 group-hover:text-white/30 group-hover:scale-110 transition-all duration-500"
-          strokeWidth={1.2}
+          size={48}
+          className="text-white/85 group-hover:text-white group-hover:scale-110 transition-all duration-500 drop-shadow-lg"
+          strokeWidth={1.5}
         />
       </div>
-      {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-bg-primary/60 to-transparent" />
     </div>
   );
 }
@@ -58,7 +76,7 @@ function ProjectCard({ project, index, onClick }) {
     <Reveal delay={index * 100}>
       <div
         onClick={onClick}
-        className="card-glow group rounded-2xl border border-border/40 bg-bg-card/30 hover:bg-bg-card-hover hover:border-border-hover transition-all duration-500 cursor-pointer overflow-hidden h-full flex flex-col"
+        className="card-glow group rounded-2xl border border-border bg-bg-card hover:border-accent/30 transition-all duration-500 cursor-pointer overflow-hidden h-full flex flex-col"
       >
         {/* Thumbnail */}
         <div className="p-3 pb-0">
@@ -71,7 +89,7 @@ function ProjectCard({ project, index, onClick }) {
             <h3 className="text-lg font-bold text-text-primary group-hover:text-accent transition-colors duration-300 tracking-tight">
               {project.title}
             </h3>
-            <span className="text-[10px] font-mono text-text-tertiary bg-bg-tertiary/50 px-2 py-0.5 rounded-full shrink-0 ml-3 mt-1">
+            <span className="text-[10px] font-mono text-text-secondary bg-bg-tertiary border border-border px-2 py-0.5 rounded-full shrink-0 ml-3 mt-1">
               {project.role}
             </span>
           </div>
@@ -84,13 +102,13 @@ function ProjectCard({ project, index, onClick }) {
             {project.stack.slice(0, 4).map((tech) => (
               <span
                 key={tech}
-                className="text-[11px] px-2.5 py-1 rounded-md border border-border/40 text-text-tertiary font-mono"
+                className="text-[11px] px-2.5 py-1 rounded-md border border-border bg-bg-tertiary/60 text-text-secondary font-mono"
               >
                 {tech}
               </span>
             ))}
             {project.stack.length > 4 && (
-              <span className="text-[11px] px-2.5 py-1 rounded-md border border-border/40 text-text-tertiary font-mono">
+              <span className="text-[11px] px-2.5 py-1 rounded-md border border-border bg-bg-tertiary/60 text-text-secondary font-mono">
                 +{project.stack.length - 4}
               </span>
             )}
@@ -128,27 +146,39 @@ function ProjectModal({ project, onClose }) {
         exit={{ opacity: 0, y: 10, scale: 0.98 }}
         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-bg-secondary border border-border/60 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto relative"
+        className="bg-bg-secondary border border-border rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto relative"
       >
         {/* Thumbnail in modal */}
         <div className="p-4 pb-0">
-          <div
-            className={`relative aspect-[16/8] rounded-xl overflow-hidden bg-gradient-to-br ${
-              project.image?.gradient || "from-accent/20 to-accent-secondary/20"
-            } border border-white/[0.04]`}
-          >
-            <div
-              className="absolute inset-0 opacity-[0.06]"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle, currentColor 1px, transparent 1px)",
-                backgroundSize: "20px 20px",
-              }}
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Icon size={56} className="text-white/15" strokeWidth={1} />
+          {project.image?.src ? (
+            <div className="relative aspect-[16/8] rounded-xl overflow-hidden border border-border bg-bg-tertiary shadow-lg">
+              <img
+                src={project.image.src}
+                alt={project.title}
+                className="w-full h-full object-cover"
+              />
             </div>
-          </div>
+          ) : (
+            <div
+              className={`relative aspect-[16/8] rounded-xl overflow-hidden bg-gradient-to-br ${
+                project.image?.gradient || "from-accent to-accent-secondary"
+              } border border-white/10 shadow-lg`}
+            >
+              <div
+                className="absolute inset-0 opacity-[0.12]"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle, white 1px, transparent 1px)",
+                  backgroundSize: "22px 22px",
+                }}
+              />
+              <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-white/15 blur-3xl" />
+              <div className="absolute -bottom-12 -left-12 w-32 h-32 rounded-full bg-white/10 blur-3xl" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Icon size={56} className="text-white/90 drop-shadow-lg" strokeWidth={1.3} />
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="p-8 md:p-10 pt-6">
@@ -188,7 +218,7 @@ function ProjectModal({ project, onClose }) {
               {project.stack.map((tech) => (
                 <span
                   key={tech}
-                  className="text-[12px] px-3 py-1.5 rounded-lg border border-border/60 bg-bg-card text-text-secondary font-mono"
+                  className="text-[12px] px-3 py-1.5 rounded-lg border border-border bg-bg-card text-text-secondary font-mono"
                 >
                   {tech}
                 </span>
@@ -202,7 +232,7 @@ function ProjectModal({ project, onClose }) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border/60 hover:border-border-hover text-text-secondary hover:text-text-primary text-[14px] font-medium transition-all duration-300"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border hover:border-border-hover text-text-secondary hover:text-text-primary text-[14px] font-medium transition-all duration-300"
               >
                 <GithubIcon size={15} />
                 Source

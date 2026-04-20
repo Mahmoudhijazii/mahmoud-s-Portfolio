@@ -6,7 +6,7 @@ import { skillCategories } from "../data/skills";
 function SkillCategory({ category, index }) {
   return (
     <Reveal delay={index * 60}>
-      <div className="card-glow p-6 rounded-2xl border border-border/40 bg-bg-card/40 hover:bg-bg-card-hover hover:border-border-hover transition-all duration-400 h-full">
+      <div className="card-glow p-6 rounded-2xl border border-border bg-bg-card hover:border-accent/30 transition-all duration-400 h-full">
         <h3 className="text-[12px] font-mono text-accent uppercase tracking-[0.15em] mb-5">
           {category.title}
         </h3>
@@ -14,7 +14,7 @@ function SkillCategory({ category, index }) {
           {category.skills.map((skill) => (
             <span
               key={skill}
-              className="text-[13px] px-3 py-1.5 rounded-lg bg-bg-tertiary/50 text-text-secondary hover:text-text-primary hover:bg-bg-tertiary transition-all duration-300 cursor-default"
+              className="text-[13px] px-3 py-1.5 rounded-lg bg-bg-tertiary border border-border text-text-secondary hover:text-accent hover:border-accent/40 hover:bg-accent-muted transition-all duration-300 cursor-default"
             >
               {skill}
             </span>

@@ -54,7 +54,7 @@ export default function WhyMe() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {values.map((value, i) => (
           <Reveal key={value.title} delay={i * 50}>
-            <div className="card-glow group p-6 rounded-2xl border border-border/40 bg-bg-card/40 hover:bg-bg-card-hover hover:border-border-hover transition-all duration-400 h-full">
+            <div className="card-glow group p-6 rounded-2xl border border-border bg-bg-card hover:border-accent/30 transition-all duration-400 h-full">
               <div className="w-10 h-10 rounded-xl bg-accent-muted flex items-center justify-center mb-5 group-hover:bg-accent-glow group-hover:scale-105 transition-all duration-300">
                 <value.icon size={18} className="text-accent" strokeWidth={1.8} />
               </div>

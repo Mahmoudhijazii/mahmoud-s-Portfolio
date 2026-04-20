@@ -1,3 +1,5 @@
+import auctionsSvg from "../assets/auctions_for_all_bwr.svg";
+
 export const projects = [
   {
     id: 1,
@@ -13,7 +15,8 @@ export const projects = [
     github: "#",
     live: "#",
     image: {
-      gradient: "from-blue-600/20 via-indigo-600/15 to-violet-600/20",
+      src: auctionsSvg,
+      gradient: "from-blue-500 via-indigo-500 to-violet-500",
       icon: "Gavel",
     },
   },
@@ -31,7 +34,7 @@ export const projects = [
     github: null,
     live: null,
     image: {
-      gradient: "from-emerald-600/20 via-teal-600/15 to-cyan-600/20",
+      gradient: "from-emerald-500 via-teal-500 to-cyan-500",
       icon: "Shield",
     },
   },
@@ -48,7 +51,7 @@ export const projects = [
     github: "#",
     live: "#",
     image: {
-      gradient: "from-amber-600/20 via-orange-600/15 to-red-600/20",
+      gradient: "from-amber-500 via-orange-500 to-red-500",
       icon: "ShoppingCart",
     },
   },
@@ -66,7 +69,7 @@ export const projects = [
     github: "#",
     live: "#",
     image: {
-      gradient: "from-purple-600/20 via-fuchsia-600/15 to-pink-600/20",
+      gradient: "from-purple-500 via-fuchsia-500 to-pink-500",
       icon: "LayoutDashboard",
     },
   },
